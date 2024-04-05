@@ -37,8 +37,8 @@ def call(Map pipelineParams) {
             )
         }
         environment {
-            APPLICATION_NAME = "${pipelineParams.appName}"
-            //APPLICATION_NAME = "eureka"
+            //APPLICATION_NAME = "${pipelineParams.appName}"
+            APPLICATION_NAME = "eureka"
             POM_VERSION = readMavenPom().getVersion()
             POM_PACKAGING = readMavenPom().getPackaging()
             // versioning + packaging
@@ -64,8 +64,8 @@ def call(Map pipelineParams) {
                 // Application Build happens here
                 steps { //For jenkins env variables no need to write env.
                     script {                    
-                        //buildApp().call()
-                        docker.buildApp("${env.APPLICATION_NAME}")                  
+                        buildApp().call()
+                        //docker.buildApp("${env.APPLICATION_NAME}")                  
                     }
                 }
             }
