@@ -301,9 +301,9 @@ def imageValidation() {
     catch (Exception e) {
         println("OOPS!, docker images with this tag is not available")
         println("Line Before Entering Docker Method")
-        k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-        //docker.buildApp("${env.APPLICATION_NAME}") 
-        //dockerBuildandPush().call()
+        //k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
+        docker.buildApp("${env.APPLICATION_NAME}") 
+        dockerBuildandPush().call()
     }
     }
 }
