@@ -38,7 +38,7 @@ def call(Map pipelineParams) {
         }
         environment {
             //APPLICATION_NAME = "eureka"
-            APPLICATION_NAME = ${pipelineParams.appName}
+            APPLICATION_NAME = "${pipelineParams.appName}"
             POM_VERSION = readMavenPom().getVersion()
             POM_PACKAGING = readMavenPom().getPackaging()
             // versioning + packaging
