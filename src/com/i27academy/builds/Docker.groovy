@@ -5,17 +5,12 @@ class Docker {
     Docker(jenkins) {
         this.jenkins = jenkins
     }
-    //Addition Method
-    def add(firstNumber, secondNumber) {
-        //logic
-        return firstNumber+secondNumber 
-    }
 
 
     //Application Build method
-    def buildApp() {
+    def buildApp(appName) {
         jenkins.sh"""#!/bin/bash
-        echo "Building the shared Library Eureka Application"
+        echo "Building the shared Library $appName Application"
         mvn clean package -DskipTests=true
         """
     }
