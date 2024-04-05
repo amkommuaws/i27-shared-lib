@@ -64,7 +64,9 @@ def call(Map pipelineParams) {
                 // Application Build happens here
                 steps { //For jenkins env variables no need to write env.
                     script {                    
-                        buildApp().call()
+                        //buildApp().call()
+                        echo "************* Executing Addition Method *************"
+                        println docker.add(4,5)
                         //docker.buildApp("${env.APPLICATION_NAME}")                  
                     }
                 }
