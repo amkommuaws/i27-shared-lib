@@ -15,7 +15,7 @@ class Docker {
     //Application Build method
     def buildApp() {
         jenkins.sh"""#!/bin/bash
-        echo "Building the Eureka Application"
+        echo "Building the shared Library Eureka Application"
         mvn clean package -DskipTests=true
         """
     }
