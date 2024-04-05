@@ -37,8 +37,8 @@ def call(Map pipelineParams) {
             )
         }
         environment {
-            //APPLICATION_NAME = "${pipelineParams.appName}"
-            APPLICATION_NAME = "eureka"
+            //APPLICATION_NAME = "eureka"
+            APPLICATION_NAME = ${pipelineParams.appName}
             POM_VERSION = readMavenPom().getVersion()
             POM_PACKAGING = readMavenPom().getPackaging()
             // versioning + packaging
@@ -67,7 +67,7 @@ def call(Map pipelineParams) {
                         //buildApp().call()
                         echo "************* Executing Addition Method *************"
                         println docker.add(4,5)
-                        docker.buildApp()                  
+                        docker.buildApp("${env.APPLICATION_NAME}")                  
                     }
                 }
             }
