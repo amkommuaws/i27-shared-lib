@@ -1,6 +1,8 @@
 import com.i27academy.builds.Docker
 import com.i27academy.k8s.K8s
 
+library ("com.i27academy.slb")
+
 def call(Map pipelineParams) {
     Docker docker = new Docker(this)
     K8s k8s = new K8s(this)
@@ -296,6 +298,7 @@ def imageValidation() {
     }
     catch (Exception e) {
         println("OOPS!, docker images with this tag is not available")
+        k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
         docker.buildApp("${env.APPLICATION_NAME}") 
         //buildApp().call()
         dockerBuildandPush().call()
