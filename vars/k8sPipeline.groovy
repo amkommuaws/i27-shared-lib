@@ -53,7 +53,7 @@ def call(Map pipelineParams) {
             GKE_DEV_CLUSTER_NAME = "cart-cluster"
             GKE_DEV_ZONE = "us-west1-a"
             GKE_DEV_PROJECT = "i27projects"
-            DOCKER_IMAGE_TAG = sh(script: 'git log -1 --pretty=%h', returnStdout:true) 
+            DOCKER_IMAGE_TAG = sh(script: 'git log -1 --pretty=%h', returnStdout:true).trim()
             K8S_DEV_FILE = "k8s_dev.yaml"
         }
         tools {
