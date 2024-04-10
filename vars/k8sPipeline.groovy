@@ -54,6 +54,7 @@ def call(Map pipelineParams) {
             GKE_DEV_ZONE = "us-west1-a"
             GKE_DEV_PROJECT = "i27projects"
             DOCKER_IMAGE_TAG = sh(script: 'git log -1 --pretty=%h', returnStdout:true) 
+            K8S_DEV_FILE = "k8s_dev.yaml"
         }
         tools {
             maven "Maven-3.8.8"
@@ -170,7 +171,7 @@ def call(Map pipelineParams) {
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     // dockerDeploy('dev', '5761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy(docker_image)
+                    k8s.k8sdeploy("${env.K8S_DEV_FILE}", docker_image)
                     echo "********** Deployed to Dev Successfully *************"
                 }
                 }
