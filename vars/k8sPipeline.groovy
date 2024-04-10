@@ -58,6 +58,10 @@ def call(Map pipelineParams) {
             K8S_TST_FILE = "k8s_tst.yaml"
             K8S_STAGE_FILE = "k8s_stg.yaml"
             K8S_PROD_FILE = "k8s_prod.yaml"
+            DEV_NAMESPACE =  "cart-dev-ns"
+            TST_NAMESPACE =  "cart-tst-ns"
+            STG_NAMESPACE =  "cart-stg-ns"
+            PROD_NAMESPACE =  "cart-prod-ns"
         }
         tools {
             maven "Maven-3.8.8"
@@ -174,7 +178,7 @@ def call(Map pipelineParams) {
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     // dockerDeploy('dev', '5761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_DEV_FILE}", docker_image)
+                    k8s.k8sdeploy("${env.K8S_DEV_FILE}", docker_image, "${env.DEV_NAMESPACE}")
                     echo "********** Deployed to Dev Successfully *************"
                 }
                 }
@@ -192,7 +196,7 @@ def call(Map pipelineParams) {
                     echo "************* Entering Test Env *****************"
                     //dockerDeploy('test', '6761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_TST_FILE}", docker_image)
+                    k8s.k8sdeploy("${env.K8S_TST_FILE}", docker_image, "${env.TST_NAMESPACE}")
                     echo "********** Deployed to Test Successfully *************"
                 }
                 }
@@ -209,7 +213,7 @@ def call(Map pipelineParams) {
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     //dockerDeploy('stage', '7761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_STAGE_FILE}", docker_image)
+                    k8s.k8sdeploy("${env.K8S_STAGE_FILE}", docker_image, "${env.STG_NAMESPACE}")
                     echo "********** Deployed to Stage Successfully *************"
                 }
                 }
@@ -238,7 +242,7 @@ def call(Map pipelineParams) {
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     //dockerDeploy('prod', '8761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_PROD_FILE}", docker_image)
+                    k8s.k8sdeploy("${env.K8S_PROD_FILE}", docker_image, "${env.PROD_NAMESPACE}")
                     echo "********** Deployed to Prod Successfully *************"
                 }
                 }
