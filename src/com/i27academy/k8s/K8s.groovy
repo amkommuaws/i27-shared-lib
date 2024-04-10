@@ -22,7 +22,7 @@ class K8s {
         echo "Executing K8s Deploy Method"
         echo "Final Image Tag is $docker_image"
         #DIT should be replaced with image been build in the docker build stage
-        sed -i "s|DIT|$docker_image" ./.cicd/$fileName
+        sed -i "s|DIT|$docker_image|g" ./.cicd/$fileName
         kubectl apply -f ./.cicd/$fileName
         """
     }
