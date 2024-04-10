@@ -55,6 +55,9 @@ def call(Map pipelineParams) {
             GKE_DEV_PROJECT = "i27projects"
             DOCKER_IMAGE_TAG = sh(script: 'git log -1 --pretty=%h', returnStdout:true).trim()
             K8S_DEV_FILE = "k8s_dev.yaml"
+            K8S_TST_FILE = "k8s_tst.yaml"
+            K8S_STAGE_FILE = "k8s_stg.yaml"
+            K8S_PROD_FILE = "k8s_prod.yaml"
         }
         tools {
             maven "Maven-3.8.8"
@@ -186,7 +189,10 @@ def call(Map pipelineParams) {
                 script {
                     imageValidation().call()
                     echo "************* Entering Test Env *****************"
-                    dockerDeploy('test', '6761', '8761').call()
+                    //dockerDeploy('test', '6761', '8761').call()
+                    k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
+                    k8s.k8sdeploy("${env.K8S_TST_FILE}", docker_image)
+                    echo "********** Deployed to Test Successfully *************"
                 }
                 }
             }
@@ -199,7 +205,10 @@ def call(Map pipelineParams) {
                 steps {
                     script {
                     imageValidation().call()
-                    dockerDeploy('stage', '7761', '8761').call()
+                    //dockerDeploy('stage', '7761', '8761').call()
+                    k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
+                    k8s.k8sdeploy("${env.K8S_STAGE_FILE}", docker_image)
+                    echo "********** Deployed to Stage Successfully *************"
                 }
                 }
             }
@@ -225,6 +234,9 @@ def call(Map pipelineParams) {
                 script {
                     imageValidation().call()
                     dockerDeploy('prod', '8761', '8761').call()
+                    k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
+                    k8s.k8sdeploy("${env.K8S_PROD_FILE}", docker_image)
+                    echo "********** Deployed to Prod Successfully *************"
                 }
                 }
             }
