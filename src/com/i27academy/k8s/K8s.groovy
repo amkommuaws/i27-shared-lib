@@ -17,12 +17,13 @@ class K8s {
         kubectl get nodes
         """
     }
-    def k8sdeploy(docker_image) {
+    def k8sdeploy(fileName, docker_image) {
         jenkins.sh"""#!/bin/bash
         echo "Executing K8s Deploy Method"
         echo "Final Image Tag is $docker_image"
         #DIT should be replaced with image been build in the docker build stage
-        kubectl apply -f ./.cicd/k8s_dev.yaml
+        sed -i "s|DIT|$docker_image" ./.cicd/$fileName
+        kubectl apply -f ./.cicd/$fileName
         """
     }
 }
