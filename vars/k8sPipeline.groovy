@@ -188,6 +188,7 @@ def call(Map pipelineParams) {
                 steps {
                 script {
                     imageValidation().call()
+                    def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     echo "************* Entering Test Env *****************"
                     //dockerDeploy('test', '6761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
@@ -205,6 +206,7 @@ def call(Map pipelineParams) {
                 steps {
                     script {
                     imageValidation().call()
+                    def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     //dockerDeploy('stage', '7761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
                     k8s.k8sdeploy("${env.K8S_STAGE_FILE}", docker_image)
@@ -233,7 +235,8 @@ def call(Map pipelineParams) {
                 }
                 script {
                     imageValidation().call()
-                    dockerDeploy('prod', '8761', '8761').call()
+                    def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
+                    //dockerDeploy('prod', '8761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
                     k8s.k8sdeploy("${env.K8S_PROD_FILE}", docker_image)
                     echo "********** Deployed to Prod Successfully *************"
