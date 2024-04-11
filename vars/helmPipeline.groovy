@@ -68,6 +68,12 @@ def call(Map pipelineParams) {
             jdk "JDK-17"
         }
         stages {
+            stage('Checkout') {
+                steps {
+                    println("Chekout: Git clone for i27SharedLib Starting........")
+                    k8s.gitClone()
+                }
+            }
             stage ('Authenticate to Google Cloud GKE') {
                 steps {
                     echo "Executing in Google cloud auth stage"
