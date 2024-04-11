@@ -71,7 +71,9 @@ def call(Map pipelineParams) {
             stage('Checkout') {
                 steps {
                     println("Chekout: Git clone for i27SharedLib Starting........")
-                    k8s.gitClone()
+                    script {
+                        k8s.gitClone()
+                    }
                 }
             }
             stage ('Authenticate to Google Cloud GKE') {
