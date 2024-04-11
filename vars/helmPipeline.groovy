@@ -73,7 +73,7 @@ def call(Map pipelineParams) {
                 steps {
                     println("Chekout: Git clone for i27SharedLib Starting........")
                     script {
-                       k8s.gitClone("${GITHUB_CREDS}")
+                       k8s.gitClone()
                     }
                 }
             }
