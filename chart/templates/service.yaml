@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.fullname }} #i27-eureka-dev-svc
+spec:
+  selector:
+    name: {{ .Values.name }}
+  ports:
+  - protocol: TCP
+    port: 80              # service port
+    targetPort: {{ .Values.targetport }}     # ContainerPort
+  type: NodePort          # ClusterIp, LoadBalancer, NodePort
