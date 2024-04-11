@@ -37,7 +37,7 @@ class K8s {
     def gitClone() {
         jenkins.sh"""#!/bin/bash
         echo "************ Entering Git Clone Method **************"
-        git clone credentialsId: 'amkommuaws_git_creds', url: 'https://github.com/amkommuaws/i27-shared-lib.git'
+        git clone -b master https://github.com/amkommuaws/i27-shared-lib.git
         echo "Listing the Files"
         ls -la
         echo "Showing the files under i27-shared-lib repo"
