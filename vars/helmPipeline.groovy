@@ -63,6 +63,11 @@ def call(Map pipelineParams) {
             TST_NAMESPACE =  "cart-tst-ns"
             STG_NAMESPACE =  "cart-stg-ns"
             PROD_NAMESPACE =  "cart-prod-ns"
+            DEV_ENV = "dev"
+            TST_ENV = "tst"
+            STG_ENV = "stg"
+            PROD_ENV = "prod"
+            HELM_CHART_PATH = "${WORKSPACE}/i27-shared-lib/chart"
         }
         tools {
             maven "Maven-3.8.8"
@@ -185,12 +190,12 @@ def call(Map pipelineParams) {
                 script {
                     sh "ls -la"
                     sh "ls -la .cicd"
-                    //imageValidation().call()
+                    imageValidation().call()
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     // dockerDeploy('dev', '5761', '8761').call()
-                    //k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
+                    k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
                     //k8s.k8sdeploy("${env.K8S_DEV_FILE}", docker_image, "${env.DEV_NAMESPACE}")
-                    //k8s.k8sHelmChartDeploy()
+                    k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.DEV_ENV}", "${env.HELM_CHART_PATH}")
                     echo "********** Deployed to Dev Successfully *************"
                 }
                 }
