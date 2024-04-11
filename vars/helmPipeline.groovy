@@ -48,6 +48,7 @@ def call(Map pipelineParams) {
             // versioning + packaging
             DOCKER_HUB = "docker.io/amkommuaws123"
             DOCKERHUB_CREDS = credentials("DockerHub_Creds_amkommuaws123")
+            GITHUB_CREDS = credentials("amkommuaws_git_creds")
             SONAR_URL = "http://34.134.238.254:9000"
             SONAR_TOKEN = credentials("Sonar_Creds")
             GKE_DEV_CLUSTER_NAME = "cart-cluster"
@@ -72,7 +73,7 @@ def call(Map pipelineParams) {
                 steps {
                     println("Chekout: Git clone for i27SharedLib Starting........")
                     script {
-                        k8s.gitClone()
+                       k8s.gitClone("${env.GITHUB_CREDS}")
                     }
                 }
             }
