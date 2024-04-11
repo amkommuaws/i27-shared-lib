@@ -213,7 +213,8 @@ def call(Map pipelineParams) {
                     echo "************* Entering Test Env *****************"
                     //dockerDeploy('test', '6761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_TST_FILE}", docker_image, "${env.TST_NAMESPACE}")
+                    //k8s.k8sdeploy("${env.K8S_TST_FILE}", docker_image, "${env.TST_NAMESPACE}")
+                    k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.TST_ENV}", "${env.HELM_CHART_PATH}", "${env.DOCKER_IMAGE_TAG}")
                     echo "********** Deployed to Test Successfully *************"
                 }
                 }
@@ -230,7 +231,8 @@ def call(Map pipelineParams) {
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     //dockerDeploy('stage', '7761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_STAGE_FILE}", docker_image, "${env.STG_NAMESPACE}")
+                    //k8s.k8sdeploy("${env.K8S_STAGE_FILE}", docker_image, "${env.STG_NAMESPACE}")
+                    k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.STG_ENV}", "${env.HELM_CHART_PATH}", "${env.DOCKER_IMAGE_TAG}")
                     echo "********** Deployed to Stage Successfully *************"
                 }
                 }
@@ -259,7 +261,8 @@ def call(Map pipelineParams) {
                     def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${env.DOCKER_IMAGE_TAG}"
                     //dockerDeploy('prod', '8761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
-                    k8s.k8sdeploy("${env.K8S_PROD_FILE}", docker_image, "${env.PROD_NAMESPACE}")
+                    //k8s.k8sdeploy("${env.K8S_PROD_FILE}", docker_image, "${env.PROD_NAMESPACE}")
+                    k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.PROD_ENV}", "${env.HELM_CHART_PATH}", "${env.DOCKER_IMAGE_TAG}")
                     echo "********** Deployed to Prod Successfully *************"
                 }
                 }
