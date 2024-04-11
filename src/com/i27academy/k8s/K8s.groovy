@@ -35,7 +35,7 @@ class K8s {
         """
     }
     def gitClone() {
-        enkins.sh"""#!/bin/bash
+        jenkins.sh"""#!/bin/bash
         echo "************ Entering Git Clone Method **************"
         git clone -b master https://github.com/amkommuaws/i27-shared-lib.git
         echo "Listing the Files"
