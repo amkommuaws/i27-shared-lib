@@ -29,8 +29,15 @@ class K8s {
     def k8sHelmChartDeploy(appName, env, helmChartPath, imageTag) {
         jenkins.sh"""#!/bin/bash
         echo "************ Helm Groovy Method Start Here **************"
-        echo "Installing the Chart"
-        helm install ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml --set image.tag=${imageTag} ${helmChartPath}
+        echo "Checking if helm chart exists"
+        if helm list | grep -i  "${appName}-${env}-chart"; then
+         echo "Chart Exists !!!!!!!!!!!!!!"
+         echo "Upgrading the Chart"
+         helm upgrade ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml --set image.tag=${imageTag} ${helmChartPath}
+        else
+         echo "Installing the Chart"
+         helm install ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml --set image.tag=${imageTag} ${helmChartPath}
+        fi
         #chartname: appname-env-chart---> ${appName}-${env}-chart 
         #valuesfilepath ---> -f ./.cicd/k8s/values_dev.yaml
         # heml install chartname -f valuesfilepath chartpath
