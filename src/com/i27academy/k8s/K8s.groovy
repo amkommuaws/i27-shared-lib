@@ -30,7 +30,7 @@ class K8s {
         jenkins.sh"""#!/bin/bash
         echo "************ Helm Groovy Method Start Here **************"
         echo "Installing the Chart"
-        helm install ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml -set image.tag=${imageTag} ${helmChartPath}
+        helm install ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml --set image.tag=${imageTag} ${helmChartPath}
         #chartname: appname-env-chart---> ${appName}-${env}-chart 
         #valuesfilepath ---> -f ./.cicd/k8s/values_dev.yaml
         # heml install chartname -f valuesfilepath chartpath
