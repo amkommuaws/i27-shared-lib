@@ -39,10 +39,11 @@ class K8s {
         echo "************ Entering Git Clone Method **************"
         git clone -b master https://github.com/amkommuaws/i27-shared-lib.git
         echo "Listing the Files"
+        ls -la
         echo "Showing the files under i27-shared-lib repo"
-        ls -la i27-shared-lib
+        ls -la i27-shared-lib/
         echo "Showing the files under chart folder"
-        ls -la i27-shared-lib/chart
+        ls -la i27-shared-lib/chart/
         """
     }
 }
