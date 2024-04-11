@@ -12,6 +12,8 @@ spec:
       labels:
         name: {{ .Values.name }}
     spec:
+      imagePullSecrets:
+      - name: private-jfrog-registry
       containers:
       - name: {{ .Values.name }}
         # The below image should be dynamically changed based on the development
