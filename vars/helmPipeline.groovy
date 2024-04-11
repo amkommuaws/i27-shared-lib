@@ -195,7 +195,7 @@ def call(Map pipelineParams) {
                     // dockerDeploy('dev', '5761', '8761').call()
                     k8s.auth_login("${env.GKE_DEV_CLUSTER_NAME}", "${env.GKE_DEV_ZONE}", "${env.GKE_DEV_PROJECT}")
                     //k8s.k8sdeploy("${env.K8S_DEV_FILE}", docker_image, "${env.DEV_NAMESPACE}")
-                    k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.DEV_ENV}", "${env.HELM_CHART_PATH}")
+                    k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.DEV_ENV}", "${env.HELM_CHART_PATH}", "${env.DOCKER_IMAGE_TAG}")
                     echo "********** Deployed to Dev Successfully *************"
                 }
                 }

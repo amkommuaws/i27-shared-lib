@@ -26,11 +26,11 @@ class K8s {
         kubectl apply -f ./.cicd/$fileName -n $nameSpace
         """
     }
-    def k8sHelmChartDeploy(appName, env, helmChartPath) {
+    def k8sHelmChartDeploy(appName, env, helmChartPath, imageTag) {
         jenkins.sh"""#!/bin/bash
         echo "************ Helm Groovy Method Start Here **************"
         echo "Installing the Chart"
-        helm install ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml ${helmChartPath}
+        helm install ${appName}-${env}-chart -f ./.cicd/k8s/values_${env}.yaml -set image.tag=${imageTag} ${helmChartPath}
         #chartname: appname-env-chart---> ${appName}-${env}-chart 
         #valuesfilepath ---> -f ./.cicd/k8s/values_dev.yaml
         # heml install chartname -f valuesfilepath chartpath
