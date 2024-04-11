@@ -34,10 +34,10 @@ class K8s {
         # heml install chartname -f valuesfilepath
         """
     }
-    def gitClone() {
+    def gitClone(gitHubCreds) {
         jenkins.sh"""#!/bin/bash
         echo "************ Entering Git Clone Method **************"
-        git clone -b master https://github.com/amkommuaws/i27-shared-lib.git
+        git credentialsId: '$gitHubCreds', url: 'https://github.com/amkommuaws/i27-shared-lib.git'
         echo "Listing the Files"
         ls -la
         echo "Showing the files under i27-shared-lib repo"
